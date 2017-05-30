@@ -1,0 +1,13 @@
+:local(.friendGender) {
+  background-color: white;
+  height: 34px;
+  border: 1px solid #ccc;
+}
+
+:local(.friendGenderSelect) {
+  border: none;
+  padding: 6px;
+  width: 100%;
+  background: white;
+  height: 32px;
+}

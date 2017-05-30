@@ -1,27 +1,27 @@
 import React, { Component, PropTypes } from 'react';
+import styles from './SelectFriendGender.css';
 
 class SelectFriendGender extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      selectedGender: this.props.default || 'male'
-    };
-
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange (event) {
-    this.setState({selectedGender: event.target.value});
+  handleChange (e) {
+    this.props.onChangeGender(e.target.value)
   }
 
   render () {
-    const { selectedGender } = this.state
+    const { value } = this.props
+
     return (
-      <select onChange={this.handleChange} value={selectedGender}>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-      </select>
+      <div className={styles.friendGender}>
+        <select className={styles.friendGenderSelect} onChange={this.handleChange} value={value}>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
     )
   }
 }
@@ -29,7 +29,7 @@ class SelectFriendGender extends Component {
 const { string } = PropTypes
 
 SelectFriendGender.propTypes = {
-  default: string
+  value: string.isRequired
 }
 
 export default SelectFriendGender

@@ -3,43 +3,43 @@ import classnames from 'classnames';
 import styles from './AddFriendInput.css';
 
 class AddFriendInput extends Component {
+  constructor(props) {
+    super(props);
 
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange (e) {
+    this.props.onChangeName(e.target.value)
+  }
+
+  handleSubmit (e) {
+    if (e.which === 13) {
+      this.props.onAddFriend()
+    }
+  }
   render () {
+    const { value } = this.props
     return (
       <input
         type="text"
         autoFocus="true"
         className={classnames('form-control', styles.addFriendInput)}
         placeholder="Type the name of a friend"
-        value={this.state.name}
-        onChange={this.handleChange.bind(this)}
-        onKeyDown={this.handleSubmit.bind(this)} />
+        value={value}
+        onChange={this.handleChange}
+        onKeyDown={this.handleSubmit} />
     );
   }
-
-  constructor (props, context) {
-    super(props, context);
-    this.state = {
-      name: this.props.name || '',
-    };
-  }
-
-  handleChange (e) {
-    this.setState({ name: e.target.value });
-  }
-
-  handleSubmit (e) {
-    const name = e.target.value.trim();
-    if (e.which === 13) {
-      this.props.addFriend(name);
-      this.setState({ name: '' });
-    }
-  }
-
 }
 
+const { func, string } = PropTypes
+
 AddFriendInput.propTypes = {
-  addFriend: PropTypes.func.isRequired
+  value: string.isRequired,
+  onChangeName: func.isRequired,
+  onAddFriend: func.isRequired
 };
 
 export default AddFriendInput
