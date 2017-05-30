@@ -3,42 +3,54 @@ import classnames from 'classnames';
 import styles from './FriendListApp.css';
 import { connect } from 'react-redux';
 
-import {addFriend, deleteFriend, starFriend} from '../actions/FriendsActions';
+import {addFriend, deleteFriend, starFriend, changeName, changeGender} from '../actions/FriendsActions';
 import { FriendList, AddFriendInput, SelectFriendGender } from '../components';
 
 class FriendListApp extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      name: '',
-      gender: 'female'
-    };
-
-    this.onSubmitFriend = this.onSubmitFriend.bind(this)
     this.onChangeName = this.onChangeName.bind(this)
     this.onChangeGender = this.onChangeGender.bind(this)
+    this.onSubmitFriend = this.onSubmitFriend.bind(this)
+
+    this.onHandlerPrevious = this.onHandlerPrevious.bind(this)
+    this.onHandlerNext = this.onHandlerNext.bind(this)
+    this.onHandlePageNumber = this.onHandlePageNumber.bind(this)
   }
 
   onSubmitFriend () {
-    const { name, gender } = this.state;
+    const { name, gender } = this.props.friendlist.newFriend;
 
     if (name.trim() !== '') {
       this.props.addFriend(name, gender);
-      this.setState({ name: '',  gender: 'female'});
+      this.props.changeName('');
+      this.props.changeGender('female');
     }
   }
 
   onChangeName (name) {
-    this.setState({name})
+    this.props.changeName(name);
   }
 
   onChangeGender (gender) {
-    this.setState({gender})
+    this.props.changeGender(gender);
+  }
+
+  onHandlerPrevious () {
+    console.log('hello')
+  }
+
+  onHandlerNext () {
+    console.log('bye')
+  }
+
+  onHandlePageNumber (number) {
+
   }
 
   render () {
-    const { name, gender } = this.state
+    const { name, gender } = this.props.friendlist.newFriend;
     const { friendlist: { friendsById } } = this.props;
 
     const actions = {
@@ -60,17 +72,25 @@ class FriendListApp extends Component {
             <button className={classnames('btn btn-default', styles.friendAddButton)} onClick={this.onSubmitFriend} >Submit</button>
           </div>
         </div>
-        <FriendList friends={friendsById} actions={actions} />
+        <FriendList
+          friends={friendsById}
+          actions={actions}
+          onHandlerPrevious={this.onHandlerPrevious}
+          onHandlerNext={this.onHandlerNext}
+          onHandlePageNumber={this.onHandlePageNumber}
+        />
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return state
 }
 
 export default connect(mapStateToProps, {
+  changeName,
+  changeGender,
   addFriend,
   deleteFriend,
   starFriend

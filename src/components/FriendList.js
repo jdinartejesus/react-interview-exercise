@@ -4,30 +4,42 @@ import FriendListItem from './FriendListItem';
 
 class FriendList extends Component {
   render () {
+    const { actions, friends, onHandlerPrevious, onHandlerNext, onHandlePageNumber } = this.props
     return (
-      <ul className={styles.friendList}>
-        {
-          this.props.friends.map((friend, index) => {
-            return (
-              <FriendListItem
-                key={index}
-                id={index}
-                name={friend.name}
-                gender={friend.gender}
-                starred={friend.starred}
-                {...this.props.actions} />
-            );
-          })
-        }
-      </ul>
+      <div>
+        <ul className={styles.friendList}>
+          {
+            friends.map((friend, index) => {
+              return (
+                <FriendListItem
+                  key={index}
+                  id={index}
+                  name={friend.name}
+                  gender={friend.gender}
+                  starred={friend.starred}
+                  {...actions} />
+              );
+            })
+          }
+        </ul>
+        <div>
+          <button onClick={onHandlerPrevious}>Previous</button>
+          {
+            <button onClick={onHandlePageNumber}>1</button>
+          }
+          <button onClick={onHandlerNext}>Next</button>
+        </div>
+      </div>
     );
   }
 
 }
 
+const { array, object } = PropTypes
+
 FriendList.propTypes = {
-  friends: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired
+  friends: array.isRequired,
+  actions: object.isRequired
 };
 
 export default FriendList;

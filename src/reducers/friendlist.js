@@ -1,6 +1,11 @@
 import * as types from '../constants/ActionTypes';
+import { merge } from 'lodash'
 
 const initialState = {
+  newFriend: {
+    name: '',
+    gender: 'female'
+  },
   friendsById: [
     {
       name: 'Theodore Roosevelt',
@@ -19,6 +24,18 @@ const initialState = {
 
 export default function friends(state = initialState, action) {
   switch (action.type) {
+    case types.CHANGE_NAME:
+      return Object.assign(
+        {},
+        state,
+        merge(state, { newFriend: { name: action.name} })
+      )
+    case types.CHANGE_GENDER:
+      return Object.assign(
+        {},
+        state,
+        merge(state, { newFriend: { gender: action.gender} })
+      )
     case types.ADD_FRIEND:
       return {
         ...state,
