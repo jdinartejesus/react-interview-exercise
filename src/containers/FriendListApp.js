@@ -3,7 +3,7 @@ import styles from './FriendListApp.css';
 import { connect } from 'react-redux';
 
 import {addFriend, deleteFriend, starFriend} from '../actions/FriendsActions';
-import { FriendList, AddFriendInput } from '../components';
+import { FriendList, AddFriendInput, SelectFriendGender } from '../components';
 
 class FriendListApp extends Component {
 
@@ -19,7 +19,14 @@ class FriendListApp extends Component {
     return (
       <div className={styles.friendListApp}>
         <h1>The FriendList</h1>
-        <AddFriendInput addFriend={actions.addFriend} />
+        <div className="row">
+          <div className="col-md-8">
+            <AddFriendInput addFriend={actions.addFriend} />
+          </div>
+          <div className="col-md-4">
+            <SelectFriendGender default="female" />
+          </div>
+        </div>
         <FriendList friends={friendsById} actions={actions} />
       </div>
     );
