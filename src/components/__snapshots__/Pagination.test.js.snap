@@ -1,0 +1,72 @@
+exports[`components/Pagination should match it's empty snapshot 1`] = `
+<div
+  className={undefined}>
+  <ul
+    className="pagination">
+    <li>
+      <a
+        aria-label="Previous"
+        className="btn btn-default"
+        href="#"
+        onClick={[Function]}>
+        <span
+          aria-hidden="true">
+          «
+        </span>
+      </a>
+    </li>
+    <li>
+      <a
+        className="btn btn-default"
+        href="#"
+        onClick={[Function]}>
+        1
+      </a>
+    </li>
+    <li>
+      <a
+        className="btn btn-default"
+        href="#"
+        onClick={[Function]}>
+        2
+      </a>
+    </li>
+    <li>
+      <a
+        className="btn btn-default"
+        href="#"
+        onClick={[Function]}>
+        3
+      </a>
+    </li>
+    <li>
+      <a
+        className="btn btn-default"
+        href="#"
+        onClick={[Function]}>
+        4
+      </a>
+    </li>
+    <li>
+      <a
+        className="btn btn-default"
+        href="#"
+        onClick={[Function]}>
+        5
+      </a>
+    </li>
+    <li>
+      <a
+        aria-label="Next"
+        className="btn btn-default"
+        href="#"
+        onClick={[Function]}>
+        <span
+          aria-hidden="true">
+          »
+        </span>
+      </a>
+    </li>
+  </ul>
+</div>
+`;

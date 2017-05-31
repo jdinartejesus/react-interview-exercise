@@ -10,21 +10,21 @@ class Pagination extends Component {
       <div className={styles.Pagination}>
         <ul className="pagination">
           <li>
-            <a href="#" className="btn btn-default" onClick={onHandlerPrevious}>
+            <a href="#" className="btn btn-default" onClick={onHandlerPrevious} aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
           {
             times(totalPages, (i) => (
-              <li>
-                <a href="#" className="btn btn-default" onClick={onHandlePageNumber.bind(null, i)} key={i} >
-                  {i}
+              <li key={i}>
+                <a href="#" className="btn btn-default" onClick={onHandlePageNumber.bind(null, i)}>
+                  {i + 1}
                 </a>
               </li>
             ))
           }
           <li>
-            <a href="#" className="btn btn-default" onClick={onHandlerNext}>
+            <a href="#" className="btn btn-default" onClick={onHandlerNext} aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>
