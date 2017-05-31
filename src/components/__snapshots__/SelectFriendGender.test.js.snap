@@ -1,0 +1,18 @@
+exports[`components/SelectFriendGender should match it's empty snapshot 1`] = `
+<div
+  className={undefined}>
+  <select
+    className={undefined}
+    onChange={[Function]}
+    value="female">
+    <option
+      value="male">
+      Male
+    </option>
+    <option
+      value="female">
+      Female
+    </option>
+  </select>
+</div>
+`;

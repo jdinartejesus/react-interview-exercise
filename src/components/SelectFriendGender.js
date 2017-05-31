@@ -9,15 +9,15 @@ class SelectFriendGender extends Component {
   }
 
   handleChange (e) {
-    this.props.onChangeGender(e.target.value)
+    this.props.onChangeGender(e.target.value);
   }
 
   render () {
-    const { value } = this.props
+    const { value } = this.props;
 
     return (
       <div className={styles.friendGender}>
-        <select className={styles.friendGenderSelect} onChange={this.handleChange} value={value}>
+        <select className={styles.friendGenderSelect} onChange={this.handleChange} value={value} >
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
@@ -26,10 +26,11 @@ class SelectFriendGender extends Component {
   }
 }
 
-const { string } = PropTypes
+const { string, func } = PropTypes;
 
 SelectFriendGender.propTypes = {
-  value: string.isRequired
+  value: string.isRequired,
+  onChangeGender: func.isRequired
 }
 
-export default SelectFriendGender
+export default SelectFriendGender;
