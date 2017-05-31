@@ -1,12 +1,33 @@
 import * as types from '../constants/ActionTypes';
 
-const initialState = {
+export const initialState = {
   initialData: [],
   data: [],
   page: [],
   currentPage: 0,
-  itemsPage: 2
+  itemsPage: 2,
+  totalPages: 1
 };
+
+function loadData (state, action) {
+  const { itemsPage, currentPage } = state;
+  const data = action.data;
+  return {
+    ...state,
+    ..._generatePage(data, itemsPage, currentPage),
+    data,
+    initialData: data
+  };
+}
+
+function pageNumberChange (state, action) {
+  const currentPage = action.number;
+  return {
+    ...state,
+    ..._generatePage(state.data, state.itemsPage, currentPage),
+    currentPage
+  };
+}
 
 function _generatePage (data, itemsPage, currentPage) {
   if (itemsPage === 0) {
@@ -25,22 +46,10 @@ export default function pagination (state = initialState, action) {
   switch (action.type) {
 
     case types.LOAD_DATA:
-      let { itemsPage, currentPage } = state;
-      let data = action.data;
-      return {
-        ...state,
-        ..._generatePage(data, itemsPage, currentPage),
-        data,
-        initialData: data
-      };
+      return loadData(state, action)
 
     case types.PAGE_NUMBER_CHANGE:
-      currentPage = action.number;
-      return {
-        ...state,
-        ..._generatePage(state.data, state.itemsPage, currentPage),
-        currentPage
-      };
+      return pageNumberChange(state, action)
 
     default:
       return state;
