@@ -3,20 +3,47 @@ import classnames from 'classnames';
 import styles from './FriendListApp.css';
 import { connect } from 'react-redux';
 
-import {addFriend, deleteFriend, starFriend, changeName, changeGender} from '../actions/FriendsActions';
-import { FriendList, AddFriendInput, SelectFriendGender } from '../components';
+import {
+  addFriend,
+  deleteFriend,
+  starFriend,
+  changeName,
+  changeGender,
+  loadData,
+  pageNumberChange
+} from '../actions';
+
+import {
+  FriendList,
+  AddFriendInput,
+  SelectFriendGender,
+  Pagination
+} from '../components';
 
 class FriendListApp extends Component {
   constructor(props) {
     super(props);
 
-    this.onChangeName = this.onChangeName.bind(this)
-    this.onChangeGender = this.onChangeGender.bind(this)
-    this.onSubmitFriend = this.onSubmitFriend.bind(this)
+    this.onChangeName = this.onChangeName.bind(this);
+    this.onChangeGender = this.onChangeGender.bind(this);
+    this.onSubmitFriend = this.onSubmitFriend.bind(this);
 
-    this.onHandlerPrevious = this.onHandlerPrevious.bind(this)
-    this.onHandlerNext = this.onHandlerNext.bind(this)
-    this.onHandlePageNumber = this.onHandlePageNumber.bind(this)
+    this.onHandlerPrevious = this.onHandlerPrevious.bind(this);
+    this.onHandlerNext = this.onHandlerNext.bind(this);
+    this.onHandlePageNumber = this.onHandlePageNumber.bind(this);
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const nextFriendsList = nextProps.friendlist.friendsById;
+    const oldFriendsList = this.props.friendlist.friendsById;
+
+    if (oldFriendsList !== nextFriendsList) {
+      nextProps.loadData(nextFriendsList);
+    }
+  }
+
+  componentWillMount () {
+    this.props.loadData(this.props.friendlist.friendsById);
   }
 
   onSubmitFriend () {
@@ -38,20 +65,30 @@ class FriendListApp extends Component {
   }
 
   onHandlerPrevious () {
-    console.log('hello')
+    const { currentPage } = this.props.pagination;
+    const nextPage = currentPage - 1;
+
+    if (nextPage >= 0 ) {
+      this.props.pageNumberChange(nextPage);
+    }
   }
 
   onHandlerNext () {
-    console.log('bye')
+    const { currentPage, totalPages } = this.props.pagination;
+    const nextPage = currentPage + 1;
+
+    if (nextPage < totalPages) {
+      this.props.pageNumberChange(nextPage);
+    }
   }
 
   onHandlePageNumber (number) {
-
+    this.props.pageNumberChange(number);
   }
 
   render () {
     const { name, gender } = this.props.friendlist.newFriend;
-    const { friendlist: { friendsById } } = this.props;
+    const {page, totalPages} = this.props.pagination;
 
     const actions = {
       deleteFriend: this.props.deleteFriend,
@@ -63,18 +100,32 @@ class FriendListApp extends Component {
         <h1>The FriendList</h1>
         <div className="row no-margin">
           <div className="col-md-8 no-padding">
-            <AddFriendInput value={name} onChangeName={this.onChangeName} onAddFriend={this.onSubmitFriend} />
+            <AddFriendInput
+              value={name}
+              onChangeName={this.onChangeName}
+              onAddFriend={this.onSubmitFriend}
+            />
           </div>
           <div className="col-md-4 no-padding">
-            <SelectFriendGender value={gender} onChangeGender={this.onChangeGender} />
+            <SelectFriendGender
+              value={gender}
+              onChangeGender={this.onChangeGender}
+            />
           </div>
           <div className="col-md-12 no-padding">
-            <button className={classnames('btn btn-default', styles.friendAddButton)} onClick={this.onSubmitFriend} >Submit</button>
+            <button
+              className={classnames('btn btn-default', styles.friendAddButton)}
+              onClick={this.onSubmitFriend}>
+              Submit
+            </button>
           </div>
         </div>
         <FriendList
-          friends={friendsById}
+          friends={page}
           actions={actions}
+        />
+        <Pagination
+          totalPages={totalPages}
           onHandlerPrevious={this.onHandlerPrevious}
           onHandlerNext={this.onHandlerNext}
           onHandlePageNumber={this.onHandlePageNumber}
@@ -89,6 +140,8 @@ function mapStateToProps (state) {
 }
 
 export default connect(mapStateToProps, {
+  pageNumberChange,
+  loadData,
   changeName,
   changeGender,
   addFriend,

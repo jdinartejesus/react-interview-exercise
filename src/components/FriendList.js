@@ -4,32 +4,24 @@ import FriendListItem from './FriendListItem';
 
 class FriendList extends Component {
   render () {
-    const { actions, friends, onHandlerPrevious, onHandlerNext, onHandlePageNumber } = this.props
+    const { actions, friends } = this.props;
+
     return (
-      <div>
-        <ul className={styles.friendList}>
-          {
-            friends.map((friend, index) => {
-              return (
-                <FriendListItem
-                  key={index}
-                  id={index}
-                  name={friend.name}
-                  gender={friend.gender}
-                  starred={friend.starred}
-                  {...actions} />
-              );
-            })
-          }
-        </ul>
-        <div>
-          <button onClick={onHandlerPrevious}>Previous</button>
-          {
-            <button onClick={onHandlePageNumber}>1</button>
-          }
-          <button onClick={onHandlerNext}>Next</button>
-        </div>
-      </div>
+      <ul className={styles.friendList}>
+        {
+          friends.map((friend, index) => {
+            return (
+              <FriendListItem
+                key={index}
+                id={friend.id}
+                name={friend.name}
+                gender={friend.gender}
+                starred={friend.starred}
+                {...actions} />
+            );
+          })
+        }
+      </ul>
     );
   }
 

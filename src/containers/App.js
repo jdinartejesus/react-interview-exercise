@@ -9,7 +9,7 @@ const reducer = combineReducers(reducers);
 const store = createStore(reducer);
 
 export default class App extends Component {
-  render() {
+  render () {
     return (
       <div>
         <Provider store={store}>

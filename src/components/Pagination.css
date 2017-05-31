@@ -1,0 +1,10 @@
+.pagination {
+  margin: 0 auto;
+  padding: 10px;
+}
+
+:local(.Pagination) {
+  background-color: white;
+  display: flex;
+  align-items: center;
+}
